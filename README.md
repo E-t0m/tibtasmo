@@ -1,4 +1,4 @@
 # tibtasmo
-download tibber prices and set tasmota timers
+download tibber prices, set tasmota timers, write prices to volkszähler
 
-this scripts are intended to run hourly by cron
+the scripts are intended to run hourly by cron, tibber_2_vz should run every minute
