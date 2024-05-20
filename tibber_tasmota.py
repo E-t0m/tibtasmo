@@ -44,7 +44,7 @@ def main():
 		if datetime.strptime(cur_p_time+':59:59', '%Y-%m-%dT%H:%M:%S') < datetime.now(): continue
 		
 		if   cur_price < price_lt: 
-			p_char = '+'
+			p_char = '>'
 			
 			if hour_now == cur_p_time:
 				if output_on: pass 
@@ -65,7 +65,8 @@ def main():
 						msg += ' 2' if tasmota_timer( tasmota_dev['auto2'],cur_timer,'1').status_code == 200 else ' ²'
 						syslog.syslog(syslog.LOG_INFO, msg +' at '+ cur_timer)
 		else: 
-			p_char = '.'
+			if cur_price > price_ut:	p_char = '<'
+			else:						p_char = '.'
 			if output_on:
 				msg += ' set timer off'
 				output_on = False
