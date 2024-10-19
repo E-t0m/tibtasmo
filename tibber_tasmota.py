@@ -50,8 +50,9 @@ def main():
 	price_lt_max = 22								# in ¢, fixed maximum for timer activation
 	
 	if verbose:	print('avg: %.2f'%price_avg,'min: %.2f'%(100*price_min),'max: %.2f'%(100*price_max),'spread: %.2f'%price_spread,'lt: %.2f'%price_lt,'ht: %.2f'%price_ut)
-	if price_lt > price_lt_max: price_lt = price_lt_max
-	if verbose: print('set lt to max: %.2f'%price_lt)
+	if price_lt > price_lt_max: 
+		price_lt = price_lt_max
+		if verbose: print('set lt to max: %.2f'%price_lt)
 	
 	tib_hour_now = datetime.now().strftime('%Y-%m-%dT%H')
 	timer_is_set = [False]*(len(tasmota_dev)+1) 	# ignore index 0
