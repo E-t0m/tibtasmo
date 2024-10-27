@@ -12,6 +12,10 @@ tasmota_dev =	{	'auto1_on':{'ip':'192.168.178.88','timer_id': '1','output':'1'},
 					'auto2_off':{'ip':'192.168.178.88','timer_id': '4','output':'2'},
 				}
 
+USE_ZEROINPUT = True
+
+if '-h' in argv or '-help' in argv: print('[ -v verbose ]','[ -vt show timer.txt ]')
+
 verbose = True if '-v' in argv else False
 
 def tasmota_timer(dev,time,action):
@@ -47,9 +51,9 @@ def main():
 	price_min = min(future_prices.values())
 	price_max = max(future_prices.values())
 	price_spread = (price_max-price_min)*100
-	price_lt = price_avg #- (price_spread / 2 )		# set the divider to your needs
-	price_ut = price_avg - (price_spread / 9 )		# it sets the threshold
-	price_lt_max = 22								# in ¢, fixed maximum for timer activation
+	price_lt = price_avg #- (price_spread * 0.5 )		# lower threshold: set the divider to your needs
+	price_ut = price_avg - (price_spread * 0.1 )		# upper threshold
+	price_lt_max = 27									# in ¢, fixed maximum for timer activation
 	
 	if verbose:	print('avg: %.2f'%price_avg,'min: %.2f'%(100*price_min),'max: %.2f'%(100*price_max),'spread: %.2f'%price_spread,'lt: %.2f'%price_lt,'ht: %.2f'%price_ut)
 	if price_lt > price_lt_max: 
@@ -129,12 +133,12 @@ def main():
 		if verbose: print(str(msg).ljust(20),cur_p_time,'%2.2f'%cur_price,str(p_char).rjust(int(cur_price)))
 	
 	
-	# write a timer file for zeroinput? set True or False below
-	if True: 
+	# write a timer file for zeroinput
+	if USE_ZEROINPUT: 
 		with open('/home/vzlogger/timer.txt','w') as fo:
 			fo.write('# 0000-00-00 for daily repeating, space or tab separated\n#                   battery discharge W if > 100, percentage if <= 100\n# date     time     |   ac inverter power W if > 100, percentage if <= 100\n') #fileheader
 			for tib_form in future_prices:
-				file_form = tib_form.replace('T',' ') + ':00:00 ' + ('200 100' if tib_form in zerotimer else '0 0')
+				file_form = tib_form.replace('T',' ') + ':00:00 ' + ('100 100' if tib_form in zerotimer else '0 0')
 				fo.write(file_form+'\n')
 				if '-vt' in argv : print(file_form)		# console output with -vt
 	
