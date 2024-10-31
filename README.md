@@ -1,7 +1,7 @@
 # tibtasmo
 download tibber prices
 
-set tasmota timers and timer.txt for zeroinput
+set tasmota timers / hot switch tasmota devices
 
 write prices to volkszähler
 
