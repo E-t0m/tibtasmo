@@ -24,6 +24,7 @@ except:
 	exit(1)
 
 for i in range(0,60):					# repeat 60 seconds
+	hpr = prices[datetime.now().strftime('%Y-%m-%dT%H')]
 	ostr = '%i: tibber = %f\n'	% ( time(), hpr*100 )
 	with open('/tmp/vz/soyo.log','a') as fo:	fo.write(ostr)
 	if debug: print(i,ostr)
