@@ -39,7 +39,7 @@ if datetime.now().hour < 13:
 		exit(0)
 else:
 	if 	( today_present 	and today_date		== today ) and \
-		( tomorrow_present	and tomorrow_date	== datetime.now()+timedelta(days=1).strftime('%Y-%m-%d') ):
+		( tomorrow_present	and tomorrow_date	== (datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d') ):
 		if debug: print('done.')
 		exit(0)
 
